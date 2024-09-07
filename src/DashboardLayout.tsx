@@ -1,13 +1,16 @@
 import { Outlet } from "react-router-dom";
-import Aside from "./components/Aside";
+import Aside from "./components/aside";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import useDeviceType from "./contexts/breakpoints";
+import cslx from "clsx";
 
 export default function DashboardLayout() {
+  const device = useDeviceType();
   return (
-    <div className="flex min-h-screen flex-col bg-black">
+    <div className="flex min-h-screen flex-col">
       <Aside />
-      <div className="flex flex-col flex-1 ml-20">
+      <div className={cslx('flex flex-col flex-1', device === 'desktop' && 'ml-20')}>
         <Header />
         <main className="flex flex-1 justify-center items-center bg-red-500">
           <Outlet />

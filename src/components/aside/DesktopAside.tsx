@@ -1,10 +1,12 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import DarkAndLightButton from "./DarkAndLightButton";
+import DarkAndLightButton from "../DarkAndLightButton";
 import {
     Home, ShoppingCart, User, Gift, LogOut, Settings, Box
 } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
-import cslx from "clsx";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import clsx from "clsx";
+
+
 
 const links = [
     {
@@ -31,12 +33,17 @@ const links = [
         name: "Settings",
         icon: Settings,
         href: "/settings",
+    },
+    {
+        name: "Users",
+        icon: User,
+        href: "/user",
     }
 ];
 
 
 
-export default function Aside() {
+export default function DesktopAside() {
     const isActive = useLocation();
     const navigate = useNavigate();
     return (
@@ -46,7 +53,7 @@ export default function Aside() {
                     <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
                         {links.map((link) => (
                             <Tooltip key={link.name}>
-                                <TooltipTrigger asChild className={cslx(isActive.pathname === link.href && "bg-black")}>
+                                <TooltipTrigger asChild className={clsx(isActive.pathname === link.href && "bg-black")}>
                                     <Link
                                         to={link.href}
                                         className="flex h-12 aspect-square items-center justify-center rounded-full "
@@ -76,3 +83,4 @@ export default function Aside() {
         </aside>
     );
 }
+
