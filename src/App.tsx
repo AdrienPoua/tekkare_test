@@ -1,15 +1,17 @@
-import Header from '@/components/Header'
-import DashboardLayout from '@/layout'
-import { Button } from '@/components/ui/button'
+// App.jsx
+import { Routes, Route } from 'react-router-dom';
+import DashboardLayout from './DashboardLayout';
+import Home from './pages/Home';
+import Test from './components/Test';
 
 function App() {
   return (
-    <DashboardLayout>
-      <Header />
-      <Button>
-        Hellooooo
-      </Button>
-    </DashboardLayout>
+    <Routes>
+      <Route path="/" element={<DashboardLayout />}>
+        <Route index element={<Home />} />
+        <Route path="test" element={<Test />} />
+      </Route>
+    </Routes>
   );
 }
 
