@@ -1,9 +1,10 @@
 import { useLocation, Link } from 'react-router-dom';
-import { Home, Box, ShoppingCart, Gift, Settings, User } from 'lucide-react'; // Adjust imports as necessary
+import { Home, Box, ShoppingCart, Gift, Settings, User, EyeOff } from 'lucide-react'; // Adjust imports as necessary
 import clsx from 'clsx';
 import { TooltipProvider } from '../ui/tooltip';
 import { useState, useEffect } from 'react';
 import DarkAndLightButton from '../DarkAndLightButton';
+import usePrivateMode from '../../contexts/privateMode';
 
 export default function MobileAside() {
     const location = useLocation();
@@ -77,23 +78,29 @@ const ParametersBtn = () => {
             >
                 <Settings className="h-6 w-6" />
             </button>
-            <div className={clsx(isOpen ? "absolute bg-background -translate-x-5 -translate-y-10 rounded-t-full" : "hidden", "transition - all duration - 300")}>
+            <div className={clsx(isOpen ? "absolute bg-background  -left-6 -translate-y-10 rounded-t-full" : "hidden", "transition - all duration - 300")}>
                 <DropdownMenu />
             </div>
         </div >
     );
 };
 
-const DropdownMenu = () => (
-    <div className='flex flex-col gap-5 justify-center items-center p-3'>
-        <Link to="/settings" >
-            <Settings className="h-6 w-6" />
-        </Link>
-        <button>
-            <Link to="/user">
-                <User className="h-6 w-6" />
+const DropdownMenu = () => {
+    const { setPrivateMode } = usePrivateMode();
+    return (
+        <div className='flex flex-col gap-5 justify-center items-center px-5 py-5'>
+            <Link to="/settings" >
+                <Settings className="h-6 w-6" />
             </Link>
-        </button>
-        <DarkAndLightButton />
-    </div>
-);
+            <button onClick={() => {
+                setPrivateMode((prev) => !prev);
+            }}> <EyeOff size={24} /> </button>
+            <button>
+                <Link to="/user">
+                    <User className="h-6 w-6" />
+                </Link>
+            </button>
+            <DarkAndLightButton />
+        </div>
+    );
+}

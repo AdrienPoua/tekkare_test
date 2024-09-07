@@ -1,46 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import DarkAndLightButton from "../DarkAndLightButton";
-import {
-    Home, ShoppingCart, User, Gift, LogOut, Settings, Box
-} from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import clsx from "clsx";
-
-
-
-const links = [
-    {
-        name: "Dashboard",
-        icon: Home,
-        href: "/",
-    },
-    {
-        name: "Assets",
-        icon: Box,
-        href: "/assets",
-    },
-    {
-        name: "Orders",
-        icon: ShoppingCart,
-        href: "/orders",
-    },
-    {
-        name: "Rewards",
-        icon: Gift,
-        href: "/rewards",
-    },
-    {
-        name: "Settings",
-        icon: Settings,
-        href: "/settings",
-    },
-    {
-        name: "Users",
-        icon: User,
-        href: "/user",
-    }
-];
-
+import { links } from "../../data/navigation";
 
 
 export default function DesktopAside() {
