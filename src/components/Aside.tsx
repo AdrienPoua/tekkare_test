@@ -1,70 +1,77 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import DarkAndLightButton from "./DarkAndLightButton";
 import {
-    Home, Package2, ShoppingCart
+    Home, ShoppingCart, User, Gift, LogOut, Settings, Box
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import cslx from "clsx";
 
 const links = [
     {
         name: "Dashboard",
         icon: Home,
-        href: "/dashboard"
+        href: "/",
     },
     {
-        name: "Dashboard",
-        icon: Home,
-        href: "/test"
-    },
-    {
-        name: "Dashboard",
-        icon: Home,
-        href: "/dashboard"
-    },
-    {
-        name: "Dashboard",
-        icon: Home,
-        href: "/dashboard"
-    },
-    {
-        name: "Dashboard",
-        icon: Home,
-        href: "/dashboard"
+        name: "Assets",
+        icon: Box,
+        href: "/assets",
     },
     {
         name: "Orders",
         icon: ShoppingCart,
-        href: "/orders"
+        href: "/orders",
+    },
+    {
+        name: "Rewards",
+        icon: Gift,
+        href: "/rewards",
+    },
+    {
+        name: "Settings",
+        icon: Settings,
+        href: "/settings",
     }
-]
+];
+
+
 
 export default function Aside() {
+    const isActive = useLocation();
+    const navigate = useNavigate();
     return (
-        <aside className="fixed inset-y-0 left-0 w-20 flex-col bg-background sm:flex">
+        <aside className="fixed inset-y-0 left-0 w-20 flex-col bg-background sm:flex py-[2%]">
             <TooltipProvider>
-                <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-                    <Link
-                        to="/"
-                        className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground"
-                    >
-                        <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
-                        <span className="sr-only">Home</span>
-                    </Link>
-                    {links.map((link) => (
-                        <Tooltip key={link.name}>
-                            <TooltipTrigger asChild>
-                                <Link
-                                    to={link.href}
-                                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
-                                >
-                                    <link.icon className="h-4 w-4" />
-                                </Link>
-                            </TooltipTrigger>
-                            <TooltipContent side="right">
-                                {link.name}
-                            </TooltipContent>
-                        </Tooltip>
-                    ))}
-                </nav>
+                <div className="flex flex-col justify-between h-full">
+                    <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+                        {links.map((link) => (
+                            <Tooltip key={link.name}>
+                                <TooltipTrigger asChild className={cslx(isActive.pathname === link.href && "bg-black")}>
+                                    <Link
+                                        to={link.href}
+                                        className="flex h-12 aspect-square items-center justify-center rounded-full "
+                                    >
+                                        <link.icon className="h-4 w-4" />
+                                    </Link>
+                                </TooltipTrigger>
+                                <TooltipContent side="right">
+                                    {link.name}
+                                </TooltipContent>
+                            </Tooltip>
+                        ))}
+                    </nav>
+                    <nav className="flex flex-col items-center gap-8 ">
+                        <DarkAndLightButton />
+                        <Link to="/user">
+                            <User />
+                        </Link>
+                        <button onClick={() => {
+                            navigate("/login");
+                        }}>
+                            <LogOut />
+                        </button>
+                    </nav>
+                </div>
             </TooltipProvider>
         </aside>
     );
