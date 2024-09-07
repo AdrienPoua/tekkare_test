@@ -1,4 +1,4 @@
-import useDeviceType from "../../contexts/breakpoints";
+import useDeviceType from "../../hooks/useDeviceType";
 import DesktopAside from "./DesktopAside";
 import MobileAside from "./MobileAside";
 

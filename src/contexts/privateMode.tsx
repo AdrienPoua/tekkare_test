@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, Dispatch, SetStateAction } from 'react';
+import { createContext, useState, Dispatch, SetStateAction, useMemo } from 'react';
 
 // Define the context type
 interface PrivateModeContextType {
@@ -7,21 +7,13 @@ interface PrivateModeContextType {
 }
 
 // Create context with a type-safe default value
-const PrivateModeContext = createContext<PrivateModeContextType | undefined>(undefined);
-
-export default function usePrivateMode(): PrivateModeContextType {
-    const context = useContext(PrivateModeContext);
-    if (!context) {
-        throw new Error("usePrivateMode must be used within PrivateModeProvider");
-    }
-    return context;
-};
+export const PrivateModeContext = createContext<PrivateModeContextType | undefined>(undefined);
 
 export const PrivateModeProvider = ({ children }: { children: React.ReactNode }) => {
     const [privateMode, setPrivateMode] = useState(false);
-
+    const value = useMemo(() => ({ privateMode, setPrivateMode }), [privateMode, setPrivateMode]);
     return (
-        <PrivateModeContext.Provider value={{ privateMode, setPrivateMode }}>
+        <PrivateModeContext.Provider value={value}>
             {children}
         </PrivateModeContext.Provider>
     );

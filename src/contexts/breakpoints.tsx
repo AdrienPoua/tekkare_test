@@ -1,19 +1,12 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 const breakpoints = {
     mobile: 640,
     tablet: 1024,
 }
 
-const DeviceContext = createContext<string | null>(null);
+export const DeviceContext = createContext<string | null>(null);
 
-export default function useDeviceType() {
-    const context = useContext(DeviceContext);
-    if (!context) {
-        throw new Error("useContext must be used within a Provider");
-    }
-    return context;
-};
 
 // Fonction qui détecte le type d'appareil en fonction de la largeur d'écran
 function getDeviceType() {

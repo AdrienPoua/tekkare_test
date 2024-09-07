@@ -4,7 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ThemeProvider } from './contexts/theme-provider.tsx'
+import { ThemeProvider } from './contexts/darkAndLight.tsx'
 import { DeviceProvider } from './contexts/breakpoints.tsx'
 import { PrivateModeProvider } from './contexts/privateMode.tsx'
 

@@ -1,106 +1,84 @@
 import { useLocation, Link } from 'react-router-dom';
 import { Home, Box, ShoppingCart, Gift, Settings, User, EyeOff } from 'lucide-react'; // Adjust imports as necessary
 import clsx from 'clsx';
-import { TooltipProvider } from '../ui/tooltip';
+import NavItem from '../NavItem';
 import { useState, useEffect } from 'react';
-import DarkAndLightButton from '../DarkAndLightButton';
-import usePrivateMode from '../../contexts/privateMode';
+import usePrivateMode from '../../hooks/usePrivateMode';
 
 export default function MobileAside() {
-    const location = useLocation();
+    const [open, setOpen] = useState(false);
+    const { setPrivateMode } = usePrivateMode();
+    const handlePrivateMode = () => {
+        setPrivateMode((prev) => !prev);
+    }
 
+    useEffect(() => {
+        const clickOutside = (e: MouseEvent) => {
+            if (e.target instanceof HTMLElement && !e.target.contains(document.querySelector('.tooltip-content'))) {
+                setOpen(false);
+            }
+        }
+        document.addEventListener('click', clickOutside);
+        return () => document.removeEventListener('click', clickOutside);
+    }, []);
     return (
         <aside className="fixed inset-x-0 bottom-0 w-full h-20 flex bg-background z-10">
-            <TooltipProvider>
-                <nav className="flex justify-around w-full items-center relative">
+            <nav className="flex justify-around w-full items-center relative">
+                {/******************************************
+                     *        first 2 buttons           *
+                     ******************************************/}
+                <div className="flex gap-5">
+                    <NavLinkItem to="/assets" icon={Box} />
+                    <NavLinkItem to="/orders" icon={ShoppingCart} />
+                </div>
+                {/******************************************
+                     *         HOME BUTTON            *
+                     ******************************************/}
+                <div className="absolute -top-10 rounded-full overflow-hidden transform scale-150">
+                    <NavLinkItem to="/" icon={Home} />
+                </div>
+                {/******************************************
+                     *        last 2 buttons           *
+                     ******************************************/}
+                <div className="flex gap-5">
+                    <NavLinkItem to="/rewards" icon={Gift} />
+                    <NavItem name="settings" >
+                        <button className='text-text' onClick={() => setOpen((prev) => !prev)}>
+                            <Settings />
+                        </button>
+                        {open &&
+                            <div className='flex flex-col absolute -top-52 py-5 px-3 gap-5 bg-background rounded-t-full h-fit w-fit'>
+                                <NavLinkItem to="/settings" icon={Settings} />
+                                <NavLinkItem to="/user" icon={User} />
+                                <NavItem name="settings" >
+                                    <button onClick={handlePrivateMode}>
+                                        <EyeOff className=" text-text" />
+                                    </button>
+                                </NavItem>
+                            </div>}
+                    </NavItem>
 
-                    {/* Links */}
-                    <LinkItem to="/assets" icon={Box} active={location.pathname === "/assets"} />
-                    <LinkItem to="/orders" icon={ShoppingCart} active={location.pathname === "/orders"} />
 
-                    {/* HOME button */}
-                    <div className="flex justify-center items-center -translate-y-10 bg-background rounded-full">
-                        <Link
-                            to="/"
-                            className={clsx(
-                                "flex h-16 w-16 items-center justify-center rounded-full border-white shadow-lg",
-                                location.pathname === "/" && "bg-gradient-to-b from-black to-background text-white"
-                            )}
-                        >
-                            <Home className="h-8 w-8" />
-                        </Link>
-                    </div>
-
-                    <LinkItem to="/rewards" icon={Gift} active={location.pathname === "/rewards"} />
-                    <ParametersBtn />
-                </nav>
-            </TooltipProvider>
-        </aside>
+                </div>
+            </nav>
+        </aside >
     );
 }
 
-const LinkItem = ({ to, icon: Icon, active }: { to: string; icon: React.ElementType; active: boolean }) => (
-    <Link
-        to={to}
-        className={clsx(
-            "flex h-12 w-12 items-center justify-center rounded-full",
-            active && "bg-black text-white"
-        )}
-    >
-        <Icon className="h-6 w-6" />
-    </Link>
-);
 
-const ParametersBtn = () => {
-    const [isOpen, setIsOpen] = useState(false);
+const NavLinkItem = ({ to, icon: Icon }: { to: string; icon: React.ElementType }) => {
     const location = useLocation();
-
-    useEffect(() => {
-        setIsOpen(false); // Close the menu on route change
-    }, [location]);
-
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if (e.target instanceof HTMLElement) {
-                setIsOpen(false);
-            }
-        };
-
-        document.addEventListener("click", handleClickOutside);
-        return () => document.removeEventListener("click", handleClickOutside);
-    }, []);
-
+    const isActive = location.pathname === to;
     return (
-        <div className="relative flex flex-col-reverse">
-            <button
-                className={clsx(isOpen ? "bg-black" : "bg-background")}
-                onClick={() => setIsOpen((prev) => !prev)}
+        <NavItem name={to} className="flex grow" >
+            <Link
+                to={to}
+                className={clsx("text-text w-full h-full flex justify-center items-center",
+                    isActive && "text-background"
+                )}
             >
-                <Settings className="h-6 w-6" />
-            </button>
-            <div className={clsx(isOpen ? "absolute bg-background  -left-6 -translate-y-10 rounded-t-full" : "hidden", "transition - all duration - 300")}>
-                <DropdownMenu />
-            </div>
-        </div >
-    );
-};
-
-const DropdownMenu = () => {
-    const { setPrivateMode } = usePrivateMode();
-    return (
-        <div className='flex flex-col gap-5 justify-center items-center px-5 py-5'>
-            <Link to="/settings" >
-                <Settings className="h-6 w-6" />
+                <Icon className="w-10 h-10" />
             </Link>
-            <button onClick={() => {
-                setPrivateMode((prev) => !prev);
-            }}> <EyeOff size={24} /> </button>
-            <button>
-                <Link to="/user">
-                    <User className="h-6 w-6" />
-                </Link>
-            </button>
-            <DarkAndLightButton />
-        </div>
+        </NavItem>
     );
 }

@@ -1,48 +1,45 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import DarkAndLightButton from "../DarkAndLightButton";
-import { User, LogOut } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
-import clsx from "clsx";
+import { LogOut, User } from "lucide-react";
 import { links } from "../../data/navigation";
+import clsx from "clsx";
+import NavItem from "../NavItem";
 
+const NavLinkItem = (item: { name: string, href: string, icon: React.ElementType }) => {
+    const isActive = useLocation().pathname === item.href;
+    return (
+        <NavItem name={item.name} >
+            <NavLink to={item.href} className={clsx(isActive && 'bg-secondary')}>
+                <item.icon />
+            </NavLink>
+        </NavItem>
+    );
+}
 
 export default function DesktopAside() {
-    const isActive = useLocation();
     const navigate = useNavigate();
     return (
-        <aside className="fixed inset-y-0 left-0 w-20 flex-col bg-background sm:flex py-[2%]">
-            <TooltipProvider>
-                <div className="flex flex-col justify-between h-full">
-                    <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-                        {links.map((link) => (
-                            <Tooltip key={link.name}>
-                                <TooltipTrigger asChild className={clsx(isActive.pathname === link.href && "bg-black")}>
-                                    <Link
-                                        to={link.href}
-                                        className="flex h-12 aspect-square items-center justify-center rounded-full "
-                                    >
-                                        <link.icon className="h-4 w-4" />
-                                    </Link>
-                                </TooltipTrigger>
-                                <TooltipContent side="right">
-                                    {link.name}
-                                </TooltipContent>
-                            </Tooltip>
-                        ))}
-                    </nav>
-                    <nav className="flex flex-col items-center gap-8 ">
-                        <DarkAndLightButton />
-                        <Link to="/user">
-                            <User />
-                        </Link>
+        <aside className={`fixed flex inset-y-0 left-0 flex-col bg-background py-[100px] w-[100px] grow border-r-2 border-accent`}>
+            <div className="flex flex-col justify-between t">
+                <nav className="flex flex-col items-center gap-4 px-2 sm:py-5 ">
+                    {links.map((link) => <NavLinkItem key={link.name} {...link} />)}
+                </nav>
+                <nav className="flex flex-col items-center gap-3 ">
+                    <NavLinkItem name="Profile" href="/user" icon={User} />
+                    <NavItem name="Dark Mode">
+                        <div>
+                            <DarkAndLightButton />
+                        </div>
+                    </NavItem>
+                    <NavItem name="Logout">
                         <button onClick={() => {
                             navigate("/login");
                         }}>
                             <LogOut />
                         </button>
-                    </nav>
-                </div>
-            </TooltipProvider>
+                    </NavItem>
+                </nav>
+            </div>
         </aside>
     );
 }
