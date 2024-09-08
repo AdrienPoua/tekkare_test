@@ -25,11 +25,6 @@ export default class Portfolio {
     return (this.getTotalPortfolioProfit() / this.getEstimatedBalanceInUsd()) * 100;
   }
 
-  getEstimatedBalanceByBTC() {
-    const bitcoin = MockedGlobal?.find(coin => coin.id === 'bitcoin');
-    return bitcoin ? this.getEstimatedBalanceInUsd() / bitcoin.current_price : NaN;
-  }
-
   getEstimatedBalanceInEur() {
     return this.getEstimatedBalanceInUsd() * EUR_USD;
   }

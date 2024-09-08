@@ -1,3 +1,5 @@
+import { TChartData } from "./Charts";
+
 export type Roi = {
     times: number;
     currency: string;
@@ -34,7 +36,7 @@ export type Roi = {
   };
   
  export type CryptoData = {
-    prices: number[][]
-    market_caps: number[][]
-    total_volumes: number[][]
+    prices: TChartData[]
+    market_caps: TChartData[]
+    total_volumes: TChartData[]
  }
