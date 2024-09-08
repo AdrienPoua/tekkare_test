@@ -35,3 +35,7 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+body {
+  color: var(--text);
+}

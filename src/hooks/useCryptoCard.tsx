@@ -22,7 +22,7 @@ export default function useCryptoCard() {
     const topLosers = getDailyLosers()
 
     if (isError) {
-        console.log(" Le nombres de rquetes a coingecko a étés dépassé, c'est limité à 30 ! Dans ce cas la je mock les données")
+        console.log(" Le nombres de requetes a coingecko a étés dépassé, c'est limité à 30 ! Dans ce cas la je mock les données")
     }
     return {
         topTraded,

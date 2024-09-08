@@ -8,8 +8,13 @@ export default function usePrivateMode() {
         throw new Error("usePrivateMode must be used within PrivateModeProvider");
     }
     const { privateMode, setPrivateMode } = context;
-    const setPrivateString = (value: string) => {
-        return value.replace(/\d/g, "*");
+
+    const setPrivateString = (value: number) => {
+        if (privateMode) {
+            return value.toString().replace(/[\d.]/g, "*");
+        }
+        return value.toString();
     }
+
     return { privateMode, setPrivateString, setPrivateMode };
 };

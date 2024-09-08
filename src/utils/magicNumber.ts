@@ -1,0 +1,1 @@
+export const EUR_USD = 0.9;

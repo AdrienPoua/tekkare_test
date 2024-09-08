@@ -1,0 +1,202 @@
+[
+  {
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "sector": "Store of Value",
+    "quantity": 2.5,
+    "current_price": 45000,
+    "total_value": 112500,
+    "percentage_of_portfolio": 20,
+    "price_change_percentage_24h": 2.5
+  },
+  {
+    "name": "Ethereum",
+    "symbol": "ETH",
+    "sector": "Layer 2",
+    "quantity": 10,
+    "current_price": 3000,
+    "total_value": 30000,
+    "percentage_of_portfolio": 15,
+    "price_change_percentage_24h": -1.8
+  },
+  {
+    "name": "Polygon",
+    "symbol": "MATIC",
+    "sector": "Layer 2",
+    "quantity": 500,
+    "current_price": 1.2,
+    "total_value": 600,
+    "percentage_of_portfolio": 5,
+    "price_change_percentage_24h": 3.4
+  },
+  {
+    "name": "Solana",
+    "symbol": "SOL",
+    "sector": "Gaming",
+    "quantity": 100,
+    "current_price": 35,
+    "total_value": 3500,
+    "percentage_of_portfolio": 7,
+    "price_change_percentage_24h": 4.1
+  },
+  {
+    "name": "Axie Infinity",
+    "symbol": "AXS",
+    "sector": "Gaming",
+    "quantity": 200,
+    "current_price": 50,
+    "total_value": 10000,
+    "percentage_of_portfolio": 10,
+    "price_change_percentage_24h": -0.5
+  },
+  {
+    "name": "Enjin Coin",
+    "symbol": "ENJ",
+    "sector": "Gaming",
+    "quantity": 1000,
+    "current_price": 1.5,
+    "total_value": 1500,
+    "percentage_of_portfolio": 3,
+    "price_change_percentage_24h": 2.2
+  },
+  {
+    "name": "Fetch.ai",
+    "symbol": "FET",
+    "sector": "AI",
+    "quantity": 1500,
+    "current_price": 0.5,
+    "total_value": 750,
+    "percentage_of_portfolio": 2,
+    "price_change_percentage_24h": 5.8
+  },
+  {
+    "name": "Ocean Protocol",
+    "symbol": "OCEAN",
+    "sector": "AI",
+    "quantity": 2000,
+    "current_price": 0.9,
+    "total_value": 1800,
+    "percentage_of_portfolio": 3,
+    "price_change_percentage_24h": 1.7
+  },
+  {
+    "name": "SingularityNET",
+    "symbol": "AGIX",
+    "sector": "AI",
+    "quantity": 2500,
+    "current_price": 0.3,
+    "total_value": 750,
+    "percentage_of_portfolio": 2,
+    "price_change_percentage_24h": -2.5
+  },
+  {
+    "name": "Uniswap",
+    "symbol": "UNI",
+    "sector": "DeFi",
+    "quantity": 300,
+    "current_price": 25,
+    "total_value": 7500,
+    "percentage_of_portfolio": 10,
+    "price_change_percentage_24h": 3.1
+  },
+  {
+    "name": "Aave",
+    "symbol": "AAVE",
+    "sector": "DeFi",
+    "quantity": 50,
+    "current_price": 400,
+    "total_value": 20000,
+    "percentage_of_portfolio": 5,
+    "price_change_percentage_24h": 2.6
+  },
+  {
+    "name": "SushiSwap",
+    "symbol": "SUSHI",
+    "sector": "DeFi",
+    "quantity": 1000,
+    "current_price": 1.2,
+    "total_value": 1200,
+    "percentage_of_portfolio": 2,
+    "price_change_percentage_24h": -1.2
+  },
+  {
+    "name": "Curve DAO",
+    "symbol": "CRV",
+    "sector": "DeFi",
+    "quantity": 2000,
+    "current_price": 2.5,
+    "total_value": 5000,
+    "percentage_of_portfolio": 5,
+    "price_change_percentage_24h": 0.9
+  },
+  {
+    "name": "PancakeSwap",
+    "symbol": "CAKE",
+    "sector": "DeFi",
+    "quantity": 500,
+    "current_price": 10,
+    "total_value": 5000,
+    "percentage_of_portfolio": 3,
+    "price_change_percentage_24h": 1.4
+  },
+  {
+    "name": "Decentraland",
+    "symbol": "MANA",
+    "sector": "NFTs",
+    "quantity": 2000,
+    "current_price": 0.8,
+    "total_value": 1600,
+    "percentage_of_portfolio": 3,
+    "price_change_percentage_24h": -0.7
+  },
+  {
+    "name": "The Sandbox",
+    "symbol": "SAND",
+    "sector": "NFTs",
+    "quantity": 1000,
+    "current_price": 1.1,
+    "total_value": 1100,
+    "percentage_of_portfolio": 4,
+    "price_change_percentage_24h": 2.3
+  },
+  {
+    "name": "Chiliz",
+    "symbol": "CHZ",
+    "sector": "NFTs",
+    "quantity": 3000,
+    "current_price": 0.5,
+    "total_value": 1500,
+    "percentage_of_portfolio": 3,
+    "price_change_percentage_24h": -0.4
+  },
+  {
+    "name": "Immutable X",
+    "symbol": "IMX",
+    "sector": "NFTs",
+    "quantity": 1200,
+    "current_price": 2.8,
+    "total_value": 3360,
+    "percentage_of_portfolio": 4,
+    "price_change_percentage_24h": 1.5
+  },
+  {
+    "name": "Loopring",
+    "symbol": "LRC",
+    "sector": "Layer 2",
+    "quantity": 1500,
+    "current_price": 0.9,
+    "total_value": 1350,
+    "percentage_of_portfolio": 2,
+    "price_change_percentage_24h": 3.8
+  },
+  {
+    "name": "Optimism",
+    "symbol": "OP",
+    "sector": "Layer 2",
+    "quantity": 1000,
+    "current_price": 2.5,
+    "total_value": 2500,
+    "percentage_of_portfolio": 4,
+    "price_change_percentage_24h": 2.1
+  }
+]
