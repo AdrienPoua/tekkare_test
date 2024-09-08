@@ -1,10 +1,8 @@
 "use client"
-
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { CryptoData } from "../utils/types/API"
-
 import {
   Card,
   CardContent,
@@ -21,24 +19,10 @@ import {
 } from "@/components/ui/chart"
 import FetchAPI from "../utils/services/FetchAPI"
 import { useQuery } from "@tanstack/react-query"
+import usePrivateMode from "../hooks/usePrivateMode"
 
-export const description = "A line chart"
 
-const chartData =
-  [
-    {
-      "date": "10:20",
-      "value": 114.61589505642618
-    },
-    {
-      "date": "10:25",
-      "value": 114.5111435586875
-    },
-    {
-      "date": "10:31",
-      "value": 114.92902695900712
-    },
-  ]
+
 
 
 const chartConfig = {
@@ -48,12 +32,12 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: CryptoData, fetchAPI: FetchAPI, period: "day" | "week" | "month" | "year" }>) {
-  const days = period === "day" ? 1 : period === "week" ? 7 : period === "month" ? 30 : 365
+export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: CryptoData, fetchAPI: FetchAPI, period: number }>) {
+  const currency = fetchAPI.devise === "eur" ? "€" : "$"
 
   const { data: cardData, isLoading, isError } = useQuery({
     queryKey: ['data', data.id],
-    queryFn: () => fetchAPI.getCryptoData(data.id.toLowerCase(), days),
+    queryFn: () => fetchAPI.getCryptoData(data.id.toLowerCase(), period),
     staleTime: 6000000, // du au limitation de l'api je cache pour 10 mins
   });
 
@@ -80,61 +64,65 @@ export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: 
 
 
   return (
-    <Card className="bg-primary">
-      <CardHeader className="flex flex-row gap-2 items-center justify-center">
+    <Card className="flex px-5">
+      <CardHeader className="flex flex-row gap-2 items-center justify-center flex-shrink-1 ">
         <Avatar>
           <AvatarImage src={data.image} alt={data.name} />
         </Avatar>
         <div className="flex flex-col">
           <CardTitle className="text-text">{data.name}</CardTitle>
-          <CardDescription className="text-text">{data.current_price} {fetchAPI.devise}</CardDescription>
+          <CardDescription className="text-text">{data.symbol.toUpperCase()}</CardDescription>
         </div>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={formatedData} // Utilise les données formatées provenant de l'API
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <YAxis
-              domain={[Math.min(...formatedData.map(data => data.value)), Math.max(...formatedData.map(data => data.value))]}  // Définit les limites de l'axe Y selon les données
-              tickLine={false}
-              axisLine={false}
-            />
-            <XAxis
-              dataKey="date" // Clé correcte pour l'axe X
-              tickLine={false}
-              axisLine={true}
-              tickMargin={5}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Line
-              dataKey="value" // Clé correcte pour la ligne
-              type="natural"
-              stroke="var(--color-desktop)"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-
-        </ChartContainer>
-      </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+      <div className="grow relative w-full">
+        <Chart data={formatedData} />
+      </div>
+      <CardFooter className="flex-col items-start justify-center gap-2 flex-shrink-1">
+        <div className="flex flex-col gap-2">
+          <div className="font-bold text-text">
+            {data.current_price} {currency}
+          </div>
+          <div className={data.price_change_percentage_24h > 0 ? "text-green-500" : "text-red-500"}>
+            {data.price_change_percentage_24h}%
+          </div>
         </div>
       </CardFooter>
     </Card>
+  )
+}
+
+const Chart = ({ data }: { data: { date: string, value: number }[] }) => {
+  return (
+    <ChartContainer config={chartConfig} className="absolute inset-0 size-full -translate-x-5 translate-y-4">
+      <LineChart
+        accessibilityLayer
+        data={data}
+      >
+        <CartesianGrid vertical={false} horizontal={false} />
+        <YAxis
+          domain={[Math.min(...data.map(data => data.value)), Math.max(...data.map(data => data.value))]}
+          tick={false}
+          axisLine={false}
+          tickLine={false}
+        />
+        <XAxis
+          dataKey="date"
+          tick={false}
+          tickLine={false}
+          axisLine={false}
+        />
+        <ChartTooltip
+          cursor={false}
+          content={<ChartTooltipContent hideLabel />}
+        />
+        <Line
+          dataKey="value" // Clé correcte pour la ligne
+          type="natural"
+          stroke="var(--color-desktop)"
+          strokeWidth={1}
+          dot={false}
+        />
+      </LineChart>
+    </ChartContainer>
   )
 }

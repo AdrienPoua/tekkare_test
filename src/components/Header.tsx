@@ -59,9 +59,9 @@ const DesktopHeader = () => {
             </div>
             <div className="flex items-center gap-10">
                 <ToggleButton />
-                <button onClick={() => {
+                <button className="border-2 border-text p-2 rounded-full hover:scale-110 transition-all" onClick={() => {
                     setPrivateMode((prev) => !prev);
-                }}> <EyeOff size={24} className="text-text" /> </button>
+                }}> <EyeOff size={24} className="text-text"/> </button>
                 <User {...userData} />
             </div>
         </header>
