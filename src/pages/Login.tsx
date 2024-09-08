@@ -17,13 +17,13 @@ export const description =
 export default function Login() {
     const navigate = useNavigate();
     return (
-        <div className="flex justify-center items-center h-screen">
-            <button className="absolute top-0 left-0 mt-8" onClick={() => {
+        <div className="flex justify-center bg-background items-center h-screen">
+            <button className="absolute top-10 left-10 bg-text rounded-full aspect-square" onClick={() => {
                 navigate("/");
             }}>
-                <ArrowLeft className="w-24 aspect-square" />
+                <ArrowLeft className="w-24 " />
             </button>
-            <Card className="mx-auto w-[400px] my-auto">
+            <Card className="mx-auto w-[400px] my-auto bg-text">
                 <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
                     <CardDescription>
@@ -39,6 +39,7 @@ export default function Login() {
                                 type="email"
                                 placeholder="m@example.com"
                                 required
+                                className="bg-text"
                             />
                         </div>
                         <div className="grid gap-2">
@@ -48,12 +49,13 @@ export default function Login() {
                                     Forgot your password?
                                 </Link>
                             </div>
-                            <Input id="password" type="password" required />
+                            <Input id="password" type="password" required                                  className="bg-text"
+                            />
                         </div>
-                        <Button type="submit" className="w-full">
+                        <Button type="submit" className="w-full bg-background text-text">
                             Login
                         </Button>
-                        <Button variant="outline" className="w-full">
+                        <Button className="w-full bg-text text-background">
                             Login with Google
                         </Button>
                     </div>

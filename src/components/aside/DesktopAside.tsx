@@ -19,8 +19,8 @@ const NavLinkItem = (item: { name: string, href: string, icon: React.ElementType
 export default function DesktopAside() {
     const navigate = useNavigate();
     return (
-        <aside className={`fixed flex inset-y-0 left-0 flex-col bg-background py-[100px] w-[100px] grow border-r-2 border-accent`}>
-            <div className="flex flex-col justify-between t">
+        <aside className={`fixed flex inset-y-0 left-0 flex-col bg-background py-[100px] justify-between w-[100px] grow border-r-2 border-accent`}>
+            <div className="flex flex-col justify-between grow">
                 <nav className="flex flex-col items-center gap-4 px-2 sm:py-5 ">
                     {links.map((link) => <NavLinkItem key={link.name} {...link} />)}
                 </nav>

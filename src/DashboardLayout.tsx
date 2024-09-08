@@ -11,7 +11,7 @@ export default function DashboardLayout() {
       <Aside />
       <div className={cslx('flex flex-col flex-1', device === 'desktop' && `ml-[100px]`)}>
       <Header />
-        <main className="flex flex-1 justify-center items-center bg-red-500">
+        <main className="flex flex-1 p-8 bg-background">
           <Outlet />
         </main>
         <Footer />

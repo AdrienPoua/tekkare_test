@@ -28,8 +28,8 @@ const User = ({ name, image, publicKey }: { name: string, image: string, publicK
                 <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-                <h1 className="text-2xl font-bold text-text">{name}</h1>
-                <p className="text-sm  text-text">{bitcoin}</p>
+                <h1 className="text-2xl font-bold text-text ">{name}</h1>
+                <p className="text-sm text-text ">{bitcoin.slice(0, 20)}...</p>
             </div>
         </div>
     )
