@@ -6,15 +6,25 @@ import { Switch } from "@/components/ui/switch"
 import usePrivateMode from "../hooks/usePrivateMode"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { userData } from "../data/user"
+import useCurrency from "../hooks/useCurrency"
 
 
 
 const ToggleButton = () => {
+    const { currency, setCurrency } = useCurrency()
+    const handleCurrency = () => {
+        setCurrency((prev) => (prev === 'eur' ? 'usd' : 'eur'));
+    };
     return (
         <div className="flex items-center space-x-2">
-            <Label htmlFor="airplane-mode" className="text-text font-bold">Main-Coin Wallet</Label>
-            <Switch id="airplane-mode" className="data-[state=checked]:bg-secondary bg-secondary" />
-            <Label htmlFor="airplane-mode" className="text-text font-bold">All Wallets (8)</Label>
+            <Label htmlFor="airplane-mode" className="text-text font-bold text-lg"> € </Label>
+            <Switch
+                id="currency-toggle"
+                checked={currency === 'usd'}
+                onCheckedChange={handleCurrency}
+                className="data-[state=checked]:bg-secondary bg-secondary"
+            />
+            <Label htmlFor="airplane-mode" className="text-text font-bold text-lg"> $ </Label>
         </div>
     )
 }

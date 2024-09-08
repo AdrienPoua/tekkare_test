@@ -38,7 +38,7 @@ export default class FetchAPI {
     }
   }
 
-  async getCryptoData(crypto: string, days: number = 30): Promise<CryptoData[]> {
+  async getCryptoData(crypto: string, days: number = 30): Promise<{prices: [number, number][], total_volumes: [number, number][], market_caps: [number, number][]}> {
     try {
       const response = await fetch(this.getCryptoDataAPI(crypto, days));
       if (!response.ok) {
