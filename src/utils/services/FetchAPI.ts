@@ -1,5 +1,6 @@
-import { CryptoData } from "../types/API";
-
+import { CryptoGlobal, CryptoData } from "../types/API";
+import MOCKED_CRYPTO from "../../data/mockedCrypto.json";
+import MOCKED_GLOBAL from "../../data/mockedGlobal.json";
 export default class FetchAPI {
   private _devise: string;
   private _numberOfItems: number;
@@ -25,29 +26,31 @@ export default class FetchAPI {
     return `https://api.coingecko.com/api/v3/coins/${crypto}/market_chart?vs_currency=${this._devise}&days=${timestamp}`;
   }
 
-  async getData(): Promise<CryptoData[]> {
+  async getData(): Promise<CryptoGlobal[]> {
     try {
       const response = await fetch(this.getMarketAPI());
       if (!response.ok) {
-        throw new Error(`Error fetching market data: ${response.statusText}`);
+        console.error(`Error fetching market data: ${response.statusText}, we exceed the limit of requests, instead i will mock the data`);
+        return MOCKED_GLOBAL;
       }
       return await response.json();
     } catch (error) {
       console.error(error);
-      return [];
+      return MOCKED_GLOBAL;
     }
   }
 
-  async getCryptoData(crypto: string, days: number = 30): Promise<{prices: [number, number][], total_volumes: [number, number][], market_caps: [number, number][]}> {
+  async getCryptoData(crypto: string, days: number = 30): Promise<CryptoData> {
     try {
       const response = await fetch(this.getCryptoDataAPI(crypto, days));
       if (!response.ok) {
-        throw new Error(`Error fetching crypto data: ${response.statusText}`);
+        console.error(`Error fetching crypto data: ${response.statusText}, we exceed the limit of requests, instead i will mock the data`);
+        return MOCKED_CRYPTO;
       }
       return await response.json();
     } catch (error) {
       console.error(error);
-      return [];
+      return MOCKED_CRYPTO;
     }
   }
 }

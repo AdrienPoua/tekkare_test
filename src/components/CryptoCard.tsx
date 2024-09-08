@@ -1,15 +1,13 @@
 "use client"
-import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { CryptoData } from "../utils/types/API"
+import { CryptoGlobal } from "../utils/types/API"
+import { ArrowUpIcon, ArrowDownIcon } from "lucide-react"
 import {
-  Card,
-  CardContent,
-  CardDescription,
+  Card, CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card"
 import {
   ChartConfig,
@@ -19,7 +17,6 @@ import {
 } from "@/components/ui/chart"
 import FetchAPI from "../utils/services/FetchAPI"
 import { useQuery } from "@tanstack/react-query"
-import usePrivateMode from "../hooks/usePrivateMode"
 
 
 
@@ -32,7 +29,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: CryptoData, fetchAPI: FetchAPI, period: number }>) {
+export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: CryptoGlobal, fetchAPI: FetchAPI, period: number }>) {
   const currency = fetchAPI.devise === "eur" ? "€" : "$"
 
   const { data: cardData, isLoading, isError } = useQuery({
@@ -57,14 +54,9 @@ export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: 
       value: currentPrice
     }
   })
-
-
-  console.log(formatedData)
-
-
-
+const isPositive = data.price_change_percentage_24h > 0
   return (
-    <Card className="flex px-5">
+    <Card className="flex p-2">
       <CardHeader className="flex flex-row gap-2 items-center justify-center flex-shrink-1 ">
         <Avatar>
           <AvatarImage src={data.image} alt={data.name} />
@@ -74,16 +66,19 @@ export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: 
           <CardDescription className="text-text">{data.symbol.toUpperCase()}</CardDescription>
         </div>
       </CardHeader>
-      <div className="grow relative w-full">
+      <div className="grow relative w-full min-w-40">
         <Chart data={formatedData} />
       </div>
       <CardFooter className="flex-col items-start justify-center gap-2 flex-shrink-1">
         <div className="flex flex-col gap-2">
-          <div className="font-bold text-text">
+          <div className="font-bold text-text text-nowrap">
             {data.current_price} {currency}
           </div>
-          <div className={data.price_change_percentage_24h > 0 ? "text-green-500" : "text-red-500"}>
-            {data.price_change_percentage_24h}%
+          <div className={isPositive ? "text-green-500" : "text-red-500"}>
+            <div className="flex flex-row gap-2 justify-end">
+              <div>{parseFloat(data.price_change_percentage_24h.toFixed(2))}%</div>
+              <div>{isPositive ? <ArrowUpIcon /> : <ArrowDownIcon />}</div>
+            </div>
           </div>
         </div>
       </CardFooter>

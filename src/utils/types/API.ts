@@ -4,7 +4,7 @@ export type Roi = {
     percentage: number;
   } | null;
   
- export type CryptoData = {
+ export type CryptoGlobal = {
     id: string;
     symbol: string;
     name: string;
@@ -33,3 +33,8 @@ export type Roi = {
     last_updated: string;
   };
   
+ export type CryptoData = {
+    prices: number[][]
+    market_caps: number[][]
+    total_volumes: number[][]
+ }

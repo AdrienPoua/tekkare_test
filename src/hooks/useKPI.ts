@@ -1,7 +1,7 @@
-import { CryptoData } from "../utils/types/API";
+import { CryptoGlobal } from "../utils/types/API";
 import { FilterApi } from "../utils/services/FilterApi";
 
-export default function useKPI(data: CryptoData[] | undefined) {
+export default function useKPI(data: CryptoGlobal[] | undefined) {
   if (!data)
     return {
       getTopTraded: () => [],
