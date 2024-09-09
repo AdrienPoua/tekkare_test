@@ -32,7 +32,7 @@ export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: 
 
   const { prices } = cardData
 
-  const formatedData = Charts.formatData(prices)
+  const formatedData = Charts.formatDataForLinearChart(prices)
   const isPositive = data.price_change_percentage_24h > 0
   return (
     <Card className="flex p-2">

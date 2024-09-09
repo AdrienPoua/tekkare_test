@@ -1,4 +1,4 @@
-type CryptoAsset = {
+export type CryptoAsset = {
   name: string;                      // Nom de la cryptomonnaie (ex: "Bitcoin")
   symbol: string;                    // Symbole de la cryptomonnaie (ex: "BTC")
   sector: string;                    // Secteur de la cryptomonnaie

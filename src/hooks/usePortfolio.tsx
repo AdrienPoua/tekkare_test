@@ -36,11 +36,17 @@ export default function usePortfolio() {
     };
     const currentCurrencySymbol = currencySymbols[currency] || "$";
 
+    const sectors = portfolio.getSectors();
+    const CircularGraphData = sectors.map(sector => ({ name: sector, value: portfolio.getSectorsPercentage(sector) }));
+
     return {
         balanceValuePrivate,
         currency,
         currentCurrencySymbol,
         privateMode,
-        dailyPNL
+        dailyPNL,
+        portfolio,
+        sectors,
+        CircularGraphData
     };
 }

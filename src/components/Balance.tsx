@@ -11,7 +11,7 @@ import { TChartData } from "../utils/types/Charts"
 export default function Balance() {
     const { balanceValuePrivate, currentCurrencySymbol, dailyPNL, privateMode } = usePortfolio()
     const positivePnl = dailyPNL > 0
-    const formatedData = Charts.formatData(mockedCrypto.prices as TChartData[])
+    const formatedData = Charts.formatDataForLinearChart(mockedCrypto.prices as TChartData[])
     return (
         <div className="flex w-full justify-between items-center border-2 border-accent rounded-xl px-10 py-5">
             <div className="flex flex-col gap-2">

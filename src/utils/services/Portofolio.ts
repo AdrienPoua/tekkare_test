@@ -1,7 +1,7 @@
 import { TPortfolio } from "../types/Portfolio";
 import MockedGlobal from "../../data/mockedGlobal.json";
 import { EUR_USD } from "../magicNumber";
-
+import { CryptoAsset } from "../types/Portfolio";
 
 export default class Portfolio {
   private readonly _portfolio: TPortfolio;
@@ -30,7 +30,7 @@ export default class Portfolio {
   }
 
   getEstimatedBalanceInBtc() {
-    const bitcoin = MockedGlobal?.find(coin => coin.id === 'bitcoin');
+    const bitcoin = MockedGlobal?.find((coin) => coin.id === "bitcoin");
     return bitcoin ? this.getEstimatedBalanceInUsd() / bitcoin.current_price : NaN;
   }
 
@@ -38,4 +38,25 @@ export default class Portfolio {
     return this.portfolio.reduce((total, coin) => total + coin.total_value * (coin.price_change_percentage_24h / 100), 0);
   }
 
+  ShareOfCrypto(crypto: CryptoAsset) {
+    return crypto.percentage_of_portfolio;
+  }
+
+  getSectors() {
+    return this.portfolio.reduce<string[]>((acc, coin) => {
+      if (!acc.includes(coin.sector)) {
+        acc.push(coin.sector);
+      }
+      return acc;
+    }, []);
+  }
+
+  getSectorsPercentage(sector: string) {
+    return this.portfolio.reduce((acc, coin) => {
+      if (coin.sector === sector) {
+        acc += coin.percentage_of_portfolio;
+      }
+      return acc;
+    }, 0);
+  }
 }
