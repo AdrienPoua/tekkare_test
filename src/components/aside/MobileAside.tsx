@@ -45,12 +45,10 @@ export default function MobileAside() {
         {/* Last two navigation buttons */}
         <div className="flex gap-6">
           <NavLinkItem href="/rewards" icon={Gift} />
-          <>
-            <Button variant="ghost" onClick={() => setOpen((prev) => !prev)}>
-              <Settings />
-            </Button>
-            {open && <SettingsDropdown />}
-          </>
+          <Button variant="ghost" onClick={() => setOpen((prev) => !prev)}>
+            <Settings />
+          </Button>
+          {open && <SettingsDropdown />}
         </div>
       </nav>
     </aside>

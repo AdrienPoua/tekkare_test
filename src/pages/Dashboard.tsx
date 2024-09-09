@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full gap-6 p-4">
       <Balance />
-      <div className={`flex gap-20 ${isMobile ? 'flex-col' : ''} justify-around`}>
+      <div className={`flex gap-20 ${isMobile ? 'flex-col' : ''} justify-around items-center`}>
         <GraphAPI />
         <CircularGraph data={CircularGraphData} />
         <BarChart data={barChartData} />

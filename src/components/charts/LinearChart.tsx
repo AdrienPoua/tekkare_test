@@ -16,7 +16,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 
-export default function DailyRanking({ data }: { data: { date: string, value: number }[] }) {
+export default function DailyRanking({ data }: { readonly data: { date: string, value: number }[] }): JSX.Element {
     return (
         <ChartContainer config={chartConfig} className="absolute inset-0 size-full -translate-x-5 translate-y-4">
             <LineChart

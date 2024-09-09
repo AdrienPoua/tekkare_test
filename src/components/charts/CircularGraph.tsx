@@ -58,7 +58,7 @@ export default function CircularGraph({ data }: { data: TData[] }) {
   const year = date.getFullYear()
 
   return (
-    <Card className="flex flex-col h-fit py-10 self-end min-w-[300px]">
+    <Card className="flex flex-col h-fit py-10 min-w-[400px]">
       <CardHeader className="items-center pb-0">
         <CardTitle>Portfolio distribution</CardTitle>
         <CardDescription>{day} {month} {year}</CardDescription>

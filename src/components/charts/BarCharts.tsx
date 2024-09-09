@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-
 import {
   Card,
   CardContent,
@@ -14,8 +13,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
-export const description = "An interactive bar chart";
 
 const chartConfig = {
   parameter1: {
@@ -34,59 +31,62 @@ type ChartData = {
   parameter2: number;
 };
 
+// Helper function to calculate the average for any parameter
+const calculateAverage = (data: ChartData[], param: keyof typeof chartConfig) => {
+  return Math.round(data.reduce((acc, curr) => acc + curr[param], 0) / data.length);
+};
+
 export default function Chart({ data }: { readonly data: readonly ChartData[] }) {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("parameter1");
+  // State to track which chart is active
+  const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>("parameter1");
 
-  const total = React.useMemo(
-    () => ({
-      parameter1: data.reduce((acc, curr) => acc + curr.parameter1, 0),
-      parameter2: data.reduce((acc, curr) => acc + curr.parameter2, 0),
-    }),
-    [data]
-  );
+  // Helper function to render buttons dynamically
+  const renderButtons = React.useCallback(() => {
+    return Object.keys(chartConfig).map((key) => {
+      const chart = key as keyof typeof chartConfig;
+      const average = calculateAverage([...data], chart);
 
-  console.log(total);
+      return (
+        <button
+          key={chart}
+          data-active={activeChart === chart}
+          className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6 transition-all"
+          onClick={() => setActiveChart(chart)}
+        >
+          <span className="text-xs text-muted-foreground">
+            {chartConfig[chart].label}
+          </span>
+          <span className="text-lg font-bold leading-none sm:text-3xl">
+            {average}
+          </span>
+          <span className="text-sm font-medium sm:text-lg">Average</span>
+        </button>
+      );
+    });
+  }, [activeChart, data]);
 
   return (
     <Card>
+      {/* Header */}
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle className="text-3xl text-bold ">Gas fees</CardTitle>
+          <CardTitle className="text-3xl font-bold">Gas Fees</CardTitle>
           <CardDescription className="text-xl">
-            Showing gas fees fo
+            Showing gas fees for BTC and ETH
           </CardDescription>
         </div>
-        <div className="flex">
-          {["parameter1", "parameter2"].map((key) => {
-            const chart = key as keyof typeof chartConfig;
-            return (
-              <button
-                key={chart}
-                data-active={activeChart === chart}
-                className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
-                onClick={() => setActiveChart(chart)}
-              >
-                <span className="text-xs text-muted-foreground">
-                  {chartConfig[chart].label}
-                </span>
-                <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {Math.round(data.reduce((acc, curr) => acc + curr[chart], 0) / data.length)}
-                </span>
-                <span className="text-lg font-bold leading-none sm:text-3xl">
-                  Average                </span>
-              </button>
-            );
-          })}
-        </div>
+        {/* Chart selection buttons */}
+        <div className="flex">{renderButtons()}</div>
       </CardHeader>
+
+      {/* Chart Content */}
       <CardContent className="px-2 sm:p-6">
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
           <BarChart
-            data={data}
+            data={[...data]}
             margin={{
               left: 12,
               right: 12,
@@ -107,6 +107,7 @@ export default function Chart({ data }: { readonly data: readonly ChartData[] })
                 });
               }}
             />
+            {/* Tooltip for chart */}
             <ChartTooltip
               content={
                 <ChartTooltipContent
@@ -122,6 +123,7 @@ export default function Chart({ data }: { readonly data: readonly ChartData[] })
                 />
               }
             />
+            {/* Dynamic bar chart with active parameter */}
             <Bar dataKey={activeChart} fill={chartConfig[activeChart].color} />
           </BarChart>
         </ChartContainer>
