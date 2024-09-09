@@ -1,18 +1,20 @@
 import usePrivateMode from "../../hooks/usePrivateMode"
 import { useLocation } from "react-router-dom"
-import { ChevronsRight, EyeOff, Eye } from "lucide-react"
+import { EyeOff, Eye } from "lucide-react"
 import ToggleButton from "./ToggleBtn"
 import User from "./User"
 import { userData } from "../../data/user"
 import Underline from "../Underline"
-
+import Logo from "../Logo"
 export default function DesktopHeader() {
     const pathname = useLocation().pathname.slice(1);
     const title = pathname.charAt(0).toUpperCase() + pathname.slice(1) || 'Dashboard'
     return (
         <header className="h-[102px] px-[5%] bg-background border-b-2 border-accent shadow-xl flex justify-between">
             <div className="flex items-center gap-2">
-                <ChevronsRight size={48} className="rounded-xl me-5 animate-pulse" />
+                <div className="flex items-center gap-2">
+                    <Logo />
+                </div>
                 <div className="relative mt-3">
                     <h1 className="text-3xl font-bold text-text">{title}</h1>
                     <Underline depth={5} />

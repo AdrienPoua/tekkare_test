@@ -1,4 +1,4 @@
-import GraphAPI from "../components/GraphAPI";
+import GraphAPI from "../components/DailyRankedCrypto";
 import CircularGraph from "../components/charts/CircularGraph";
 import Balance from "@/components/Balance";
 import usePortfolio from "@/hooks/usePortfolio";

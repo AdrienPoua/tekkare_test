@@ -8,6 +8,7 @@ import FetchAPI from "../utils/services/FetchAPI";
 import { useQuery } from "@tanstack/react-query";
 import ChartGraph from "./charts/LinearChart";
 import Charts from "../utils/services/Charts";
+import Loading from "./Loading";
 
 // CryptoCard component: Displays crypto price, graph, and other key information
 export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: CryptoGlobal, fetchAPI: FetchAPI, period: number }>) {
@@ -21,9 +22,9 @@ export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: 
   });
 
   // Handle loading state
-  if (isLoading) return <LoadingState />;
+  if (isLoading) return <Loading />;
   if (isError) return <ErrorState />;
-  if (!cardData) return <NoDataState />;
+  if (!cardData) return <Loading />;
 
   // Data formatting
   const formattedData = Charts.formatDataForLinearChart(cardData.prices);
@@ -49,8 +50,8 @@ export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: 
       </div>
 
       {/* Footer Section: Price and Percentage Change */}
-      <CardFooter className="flex flex-col justify-center items-start gap-2">
-        <div className="text-xl font-bold flex text-gray-900">
+      <CardFooter className="flex flex-col justify-center items-start shrink-0 ">
+        <div className="text-xl font-bold flex text-gray-900 me-2">
           <span>{parseFloat(data.current_price.toFixed(2))} </span>
           <span> {currency}</span>
         </div>
@@ -63,23 +64,9 @@ export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: 
   );
 }
 
-// Loading State component
-const LoadingState = () => (
-  <div className="flex justify-center items-center w-full h-full">
-    <p className="text-gray-500">Loading...</p>
-  </div>
-);
-
 // Error State component
 const ErrorState = () => (
   <div className="flex justify-center items-center w-full h-full">
     <p className="text-red-500">Error loading data</p>
-  </div>
-);
-
-// No Data State component
-const NoDataState = () => (
-  <div className="flex justify-center items-center w-full h-full">
-    <p className="text-gray-400">No data available</p>
   </div>
 );
