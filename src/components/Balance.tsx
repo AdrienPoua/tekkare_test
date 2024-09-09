@@ -40,26 +40,28 @@ const BalanceInfo = ({ balance, currencySymbol, dailyPNL, positivePnl, privateMo
     dailyPNL: number;
     positivePnl: boolean;
     privateMode: boolean;
-}) => (
-    <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3">
-        <h2 className="text-3xl font-extrabold text-accent">Balance Overview</h2>
-        <p className="text-4xl font-bold tracking-tight">
-            {balance} {currencySymbol}
-        </p>
-        <div className="flex items-center gap-2">
-            <p className="text-lg font-medium text-gray-600">Today‘s PnL</p>
-            <InfoTooltip />
+}) => {
+    return (
+        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3">
+            <h2 className="text-3xl font-extrabold text-accent">Balance Overview</h2>
+            <p className="text-4xl font-bold tracking-tight">
+                {balance} {currencySymbol}
+            </p>
             <div className="flex items-center gap-2">
-                <p className={`text-xl font-semibold ${positivePnl ? "text-green-500" : "text-red-500"}`}>
-                    {dailyPNL}
-                </p>
-                {!privateMode && (
-                    positivePnl ? <ArrowUp className="text-green-500 w-6 h-6" /> : <ArrowDown className="text-red-500 w-6 h-6" />
-                )}
+                <p className="text-lg font-medium text-gray-600">Today‘s PnL</p>
+                <InfoTooltip />
+                <div className="flex items-center gap-2">
+                    <p className={`text-xl font-semibold ${positivePnl ? "text-green-500" : "text-red-500"}`}>
+                        { !privateMode && dailyPNL}
+                    </p>
+                    {!privateMode && (
+                        positivePnl ? <ArrowUp className="text-green-500 w-6 h-6" /> : <ArrowDown className="text-red-500 w-6 h-6" />
+                    )}
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 const ActionButtons = () => (
     <div className="flex flex-wrap gap-4">

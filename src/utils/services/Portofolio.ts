@@ -1,7 +1,6 @@
-import { TPortfolio } from "../types/Portfolio";
+import { TPortfolio, CryptoAsset } from "../types/Portfolio";
 import MockedGlobal from "../../data/mockedGlobal.json";
 import { EUR_USD } from "../magicNumber";
-import { CryptoAsset } from "../types/Portfolio";
 
 export default class Portfolio {
   private readonly _portfolio: TPortfolio;

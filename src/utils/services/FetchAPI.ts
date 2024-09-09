@@ -1,4 +1,4 @@
-import { CryptoGlobal, CryptoData } from "../types/API";
+import { CryptoGlobal } from "../types/API";
 import MOCKED_CRYPTO from "../../data/mockedCrypto.json";
 import MOCKED_GLOBAL from "../../data/mockedGlobal.json";
 export default class FetchAPI {
@@ -40,7 +40,7 @@ export default class FetchAPI {
     }
   }
 
-  async getCryptoData(crypto: string, days: number = 30): Promise<CryptoData> {
+  async getCryptoData(crypto: string, days: number = 30) {
     try {
       const response = await fetch(this.getCryptoDataAPI(crypto, days));
       if (!response.ok) {
