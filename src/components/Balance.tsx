@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button"
-import { Info } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import usePortfolio from "../hooks/usePortfolio"
-import { ArrowUp, ArrowDown } from "lucide-react"
+import { ArrowUp, ArrowDown, Info } from "lucide-react"
 import ChartGraph from "./charts/LinearChart"
 import mockedCrypto from "../data/mockedCrypto.json"
 import Charts from "../utils/services/Charts"
@@ -39,7 +38,7 @@ export default function Balance() {
                     </Button>
                 </div>
                 <div className="relative w-full min-w-40 h-40">
-                    <ChartGraph data={formatedData}    />
+                    <ChartGraph data={formatedData} />
                 </div>
             </div>
         </div>

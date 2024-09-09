@@ -34,7 +34,7 @@ type ChartData = {
   parameter2: number;
 };
 
-export default function Chart({ data }: { data: ChartData[] }) {
+export default function Chart({ data }: { readonly data: readonly ChartData[] }) {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>("parameter1");
 
@@ -52,8 +52,8 @@ export default function Chart({ data }: { data: ChartData[] }) {
     <Card>
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Gas fees</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-3xl text-bold ">Gas fees</CardTitle>
+          <CardDescription className="text-xl">
             Showing gas fees fo
           </CardDescription>
         </div>

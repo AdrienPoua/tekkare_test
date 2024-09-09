@@ -1,84 +1,108 @@
 import { useLocation, Link } from 'react-router-dom';
-import { Home, Box, ShoppingCart, Gift, Settings, User, EyeOff } from 'lucide-react'; // Adjust imports as necessary
+import { Home, Box, ShoppingCart, Gift, Settings, User, EyeOff } from 'lucide-react';
 import clsx from 'clsx';
-import NavItem from '../NavItem';
 import { useState, useEffect } from 'react';
 import usePrivateMode from '../../hooks/usePrivateMode';
+import { Button } from '../ui/button';
 
+/**
+ * MobileAside: Renders the mobile bottom navigation bar with navigation links and settings options.
+ */
 export default function MobileAside() {
-    const [open, setOpen] = useState(false);
-    const { setPrivateMode } = usePrivateMode();
-    const handlePrivateMode = () => {
-        setPrivateMode((prev) => !prev);
-    }
+  const [open, setOpen] = useState(false);
+  // Close settings menu when clicking outside
+  useEffect(() => {
+    const clickOutside = (e: MouseEvent) => {
+      if (open && e.target instanceof HTMLElement && !e.target.closest('.settings-menu')) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('click', clickOutside);
+    return () => document.removeEventListener('click', clickOutside);
+  }, [open]);
 
-    useEffect(() => {
-        const clickOutside = (e: MouseEvent) => {
-            if (e.target instanceof HTMLElement && !e.target.contains(document.querySelector('.tooltip-content'))) {
-                setOpen(false);
-            }
-        }
-        document.addEventListener('click', clickOutside);
-        return () => document.removeEventListener('click', clickOutside);
-    }, []);
-    return (
-        <aside className="fixed inset-x-0 bottom-0 w-full h-20 flex bg-background z-10">
-            <nav className="flex justify-around w-full items-center relative">
-                {/******************************************
-                     *        first 2 buttons           *
-                     ******************************************/}
-                <div className="flex gap-5">
-                    <NavLinkItem to="/assets" icon={Box} />
-                    <NavLinkItem to="/orders" icon={ShoppingCart} />
-                </div>
-                {/******************************************
-                     *         HOME BUTTON            *
-                     ******************************************/}
-                <div className="absolute -top-10 rounded-full overflow-hidden transform scale-150">
-                    <NavLinkItem to="/" icon={Home} />
-                </div>
-                {/******************************************
-                     *        last 2 buttons           *
-                     ******************************************/}
-                <div className="flex gap-5">
-                    <NavLinkItem to="/rewards" icon={Gift} />
-                    <NavItem name="settings" >
-                        <button className='text-text' onClick={() => setOpen((prev) => !prev)}>
-                            <Settings />
-                        </button>
-                        {open &&
-                            <div className='flex flex-col absolute -top-52 py-5 px-3 gap-5 bg-background rounded-t-full h-fit w-fit'>
-                                <NavLinkItem to="/settings" icon={Settings} />
-                                <NavLinkItem to="/user" icon={User} />
-                                <NavItem name="settings" >
-                                    <button onClick={handlePrivateMode}>
-                                        <EyeOff className=" text-text" />
-                                    </button>
-                                </NavItem>
-                            </div>}
-                    </NavItem>
+  return (
+    <aside className="fixed inset-x-0 bottom-0 w-full h-24 flex bg-background z-20 shadow-lg">
+      <nav className="flex justify-around w-full items-center relative">
+
+        {/* First two navigation buttons */}
+        <div className="flex gap-6">
+          <NavLinkItem href="/assets" icon={Box} />
+          <NavLinkItem href="/orders" icon={ShoppingCart} />
+        </div>
+
+        {/* Center Home button with emphasis */}
+        <Button
+          variant="ghost"
+          className="absolute -top-8 w-16 h-16 rounded-full shadow-lg transform scale-110 bg-background p-4 border-2 border-accent "
+        >
+          <Link to="/">
+            <Home className="w-6 h-6 text-accent" />
+          </Link>
+        </Button>
 
 
-                </div>
-            </nav>
-        </aside >
-    );
+        {/* Last two navigation buttons */}
+        <div className="flex gap-6">
+          <NavLinkItem href="/rewards" icon={Gift} />
+          <>
+            <Button variant="ghost" onClick={() => setOpen((prev) => !prev)}>
+              <Settings />
+            </Button>
+            {open && <SettingsDropdown />}
+          </>
+        </div>
+      </nav>
+    </aside>
+  );
 }
 
+/**
+ * NavLinkItem: Renders an individual navigation link with an icon and applies active state.
+ */
+const NavLinkItem = ({ href, icon: Icon, customClass = "" }: { href: string; icon: React.ElementType, customClass?: string }) => {
+  const location = useLocation();
+  const isActive = location.pathname === href;
 
-const NavLinkItem = ({ to, icon: Icon }: { to: string; icon: React.ElementType }) => {
-    const location = useLocation();
-    const isActive = location.pathname === to;
-    return (
-        <NavItem name={to} className="flex grow" >
-            <Link
-                to={to}
-                className={clsx("text-text w-full h-full flex justify-center items-center",
-                    isActive && "text-background"
-                )}
-            >
-                <Icon className="w-10 h-10" />
-            </Link>
-        </NavItem>
-    );
+  return (
+    <Button variant="ghost" className="p-2 rounded-full hover:bg-muted transition-colors">
+      <Link to={href} className={clsx(isActive ? 'text-accent' : 'text-muted', customClass)}>
+        <Icon className="w-6 h-6" />
+      </Link>
+    </Button>
+  );
+};
+
+
+
+
+export function SettingsDropdown() {
+  const { setPrivateMode } = usePrivateMode();
+
+  return (
+    <div className="settings-menu flex flex-col absolute top-[-159px] py-4 px-6 gap-4 bg-background rounded-xl shadow-xl w-56 z-30 transition-all">
+      {/* NavLinkItem for Settings */}
+      <div className="flex items-center gap-3">
+        <NavLinkItem href="/settings" icon={Settings} />
+        <span className="text-text">Settings</span>
+      </div>
+
+      {/* NavLinkItem for User */}
+      <div className="flex items-center gap-3">
+        <NavLinkItem href="/user" icon={User} />
+        <span className="text-text">User</span>
+      </div>
+
+      {/* Private Mode Toggle */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => setPrivateMode((prev) => !prev)}
+          className="flex items-center gap-2 hover:text-accent transition-colors"
+        >
+          <EyeOff className="text-text" />
+          <span>Private Mode</span>
+        </button>
+      </div>
+    </div>
+  );
 }
