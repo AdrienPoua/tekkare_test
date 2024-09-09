@@ -41,7 +41,7 @@ export default function DailyRanking({ data }: { data: { date: string, value: nu
                     content={<ChartTooltipContent hideLabel />}
                 />
                 <Line
-                    dataKey="value" // Clé correcte pour la ligne
+                    dataKey="value"
                     type="natural"
                     stroke="var(--color-desktop)"
                     strokeWidth={1}
