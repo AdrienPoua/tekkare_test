@@ -1,9 +1,6 @@
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
 import {
-    ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
-    ChartConfig
+    ChartContainer, ChartConfig
 } from "@/components/ui/chart"
 
 
@@ -35,10 +32,6 @@ export default function DailyRanking({ data }: { readonly data: { date: string, 
                     tick={false}
                     tickLine={false}
                     axisLine={false}
-                />
-                <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
                 />
                 <Line
                     dataKey="value"
