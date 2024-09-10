@@ -50,7 +50,7 @@ export default function CryptoCard({ data, fetchAPI, period }: Readonly<{ data: 
       </div>
 
       {/* Footer Section: Price and Percentage Change */}
-      <CardFooter className="flex flex-col justify-center items-start shrink-0 ">
+      <CardFooter className="flex flex-col justify-center items-start ">
         <div className="text-xl font-bold flex text-gray-900 me-2">
           <span>{parseFloat(data.current_price.toFixed(2))} </span>
           <span> {currency}</span>

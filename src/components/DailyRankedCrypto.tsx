@@ -24,7 +24,7 @@ export default function GraphAPI() {
   };
 
   return (
-    <div className="flex flex-col gap-4 max-w-[500px]">
+    <div className="flex flex-col gap-4 w-[550px]">
       {/* Navigation Buttons */}
       <div className="flex flex-row justify-center gap-2 mb-4 w-full">
         {Object.keys(categories).map((category) => (
